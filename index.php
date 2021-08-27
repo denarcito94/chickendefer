@@ -1,13 +1,16 @@
 <?php
+
+
 session_start();
+$user = $_SESSION['user'] ?? null;
+$errors = $_SESSION['errors'] ?? [];
 
-if (isset($_SESSION) && $_SESSION['user']) {
+if (isset($_SESSION) && $user) {
   $path = $_SERVER['HTTP_REFERER'];
-  header("location:" . $path . 'menu.php');
+  header("location:" . $path . 'admin');
 } else {
-  $errors = $_SESSION['errors'] ?? [];
-  include_once 'views/home.view.php';
 
-  unset($_SESSION['errors']);
+  include_once 'views/home.view.php';
+  unset($_SESSION);
   session_destroy();
 }

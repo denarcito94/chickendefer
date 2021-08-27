@@ -25,7 +25,7 @@
             </span>
 
             <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
-              <a class="dropdown-item menuperfil cerrar" href="#"><i class="fas fa-sign-out-alt m-1"></i>Salir
+              <a class="dropdown-item menuperfil cerrar" href="../php/logout.php"><i class="fas fa-sign-out-alt m-1"></i>Salir
               </a>
             </div>
           </li>

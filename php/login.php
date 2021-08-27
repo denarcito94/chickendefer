@@ -38,5 +38,5 @@ if (isset($_POST)) {
   }
 
   $_SESSION['user'] = $record;
-  header("location:" . $path . 'menu.php');
+  header("location:" . $path . 'admin');
 }

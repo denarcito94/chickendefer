@@ -5,5 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hola mundo</title>
+  <!-- CSS only -->
+  <?php include_once 'assets.view.php' ?>
 </head>
 <body>

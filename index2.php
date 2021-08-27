@@ -1,18 +1,18 @@
 <?php
-//header('Location: menu.php');
-//session_start();
+// header('Location: menu.php');
+session_start();
 
-//if(!isset($_SESSION['contador'])){$_SESSION['contador']=0;}
+if(!isset($_SESSION['contador'])){$_SESSION['contador']=0;}
 
-// require_once "config/datos_conexion.php";
+require_once "config/datos_conexion.php";
 
-// $conexion=mysqli_connect($db_host, $db_user, $db_pass);
-// if (mysqli_connect_errno()) {
-// 	echo "no se puede conectar a la base de datos";
-// 	exit();
-// }
-// mysqli_select_db($conexion, $db_nombre)or die("no se encontro ninguna base de datos");
-// mysqli_set_charset($conexion, "utf8");
+$conexion=mysqli_connect($db_host, $db_user, $db_pass);
+if (mysqli_connect_errno()) {
+	echo "no se puede conectar a la base de datos";
+	exit();
+}
+mysqli_select_db($conexion, $db_nombre)or die("no se encontro ninguna base de datos");
+mysqli_set_charset($conexion, "utf8");
 
 
 ?>
@@ -62,7 +62,7 @@
 			</div>
 			";
 		}
-		//mysqli_close($conexion);
+		mysqli_close($conexion);
       ?>
       
 </div>

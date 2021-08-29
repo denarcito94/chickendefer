@@ -16,7 +16,12 @@ mysqli_select_db($conexion, $db_nombre) or die("no se encontro ninguna base de d
 mysqli_set_charset($conexion, "utf8");
 
 $peticion = "SELECT * FROM productos";
-$resultado = mysqli_query($conexion, $peticion);
+$resultado = mysqli_query(
+	$conexion,
+	$peticion
+);
+
+mysqli_close($conexion);
 
 
 ?>
@@ -79,18 +84,18 @@ $resultado = mysqli_query($conexion, $peticion);
 		<div class="row">
 			<div class="barra-lateral col-12 col-sm-auto">
 				<nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
-					<a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
-					<a href="#"><i class="fas fa-home"></i><span>Productos</span></a>
-					<a href="#"><i class="fas fa-home"></i><span>Clientes</span></a>
-					<a href="#"><i class="fas fa-home"></i><span>Pedidos</span></a>
+					<a id="go" href="admin/#go"><i class="fas fa-home"></i><span>Inicio</span></a>
+					<a id="productos" href="Registro_producto.php#productos"><i class="fas fa-store"></i><span>Productos</span></a>
+					<a id="clientes" href="Registro_cliente.php#clientes"><i class="fas fa-users"></i><span>Clientes</span></a>
+					<a id="pedidos" href="Registro_pedidos.php#pedidos"><i class="fas fa-list"></i><span>Pedidos</span></a>
 				</nav>
 			</div>
-			<main class="main col col-md-10 pl-5">
+			<main class="main col pl-3">
 				<div class="row text-center">
 					<div class="columna col-12">
 						<!-- FORM -->
 						<div class="mb-3" align="center">
-							<div align="center" style="padding: 20px; color:black ; width:80%; border: 1px solid #aeadad;box-shadow: 0px 10px 15px #d9d0d0; ">
+							<div class="w-75 border shandow rounded p-3">
 								<div class="container">
 									<h4 align="center">Registro Productos</h4>
 									<form class="was-validated" action="php/insertar_producto.php" method="post" enctype="multipart/form-data">
@@ -102,7 +107,6 @@ $resultado = mysqli_query($conexion, $peticion);
 											<input class="form-control" type="text" name="precio" placeholder="Ingrese precio" required>
 											<br>
 											<input type="file" name="imagen"><br><br>
-											<a class="btn btn-primary" href="menu.php"><i class='fas fa-arrow-left'></i> Volver</a>
 											<input type="submit" name="reg_producto" value="Registrar" class="btn btn-primary">
 										</div>
 									</form>
@@ -154,6 +158,7 @@ $resultado = mysqli_query($conexion, $peticion);
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/646c794df3.js"></script>
+	<script src="./codigo.js"></script>
 </body>
 
 </html>

@@ -38,10 +38,10 @@
     <div class="row">
       <div class="barra-lateral col-12 col-sm-auto">
         <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
-          <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
-          <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
-          <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
-          <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
+          <a id="go" href=".#go"><i class="fas fa-home"></i><span>Inicio</span></a>
+          <a id="productos" href="../Registro_producto.php#productos"><i class="fas fa-store"></i><span>Productos</span></a>
+          <a id="clientes" href="../Registro_cliente.php#clientes"><i class="fas fa-users"></i><span>Clientes</span></a>
+          <a id="pedidos" href="../Registro_pedidos.php#pedidos"><i class="fas fa-list"></i><span>Pedidos</span></a>
         </nav>
       </div>
       <main class="main col">
@@ -64,6 +64,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/646c794df3.js"></script>
+  <script src="../codigo.js"></script>
 </body>
 
 </html>

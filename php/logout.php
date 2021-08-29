@@ -19,5 +19,6 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_destroy();
-$path = $_SERVER['HTTP_REFERER'] . "../";
+$path = str_replace('/php/logout.php', '', $_SERVER['REQUEST_URI']);
+
 header("location:" . $path);

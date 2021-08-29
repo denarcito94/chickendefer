@@ -1,0 +1,30 @@
+<div class="container card shadow w-100">
+							<table class="table table-sm table-bordered">
+								<tr>
+									<td><strong>Producto</strong></td>
+									<td><strong>Codigo</strong></td>
+									<td><strong>Precio</strong></td>
+									<td><strong>Imagen</strong></td>
+									<td><strong>Actualizar</strong></td>
+									<td><strong>Borrar</strong></td>
+								</tr>
+								<?php
+								$peticion = "SELECT * FROM productos";
+								$resultado = mysqli_query($conexion, $peticion);
+								while ($fila = mysqli_fetch_array($resultado)) {
+									echo '<tr>
+	<form action="php/actualizar_producto.php?id=' . $fila['id'] . '" method="post" >
+		<td><input class="lbl_text" type="text" name="nombre" value="' . $fila['nombre'] . '" ></td>	
+		<td><input class="lbl_text" type="text" name="cod" value="' . $fila['codigo'] . '"></td>	
+		<td><input class="lbl_text" type="text" name="precio" value="' . $fila['precio'] . '"></td>
+		<td><img src="imagen/' . $fila['imagen'] . '"  width=100px height=100px style="border: 2px solid #ffffff;box-shadow: 0px 10px 15px rgba(0,0,0,0.4);" ></td>
+		<td><input type="submit" value="Actualizar" class="btn btn-primary"></td>		
+	</form>
+		<td><a href="php/eliminar_producto.php?id=' . $fila['id'] . '"><button class="btn btn-danger">Borrar</buton></td>
+	</tr>
+	';
+								}
+
+								?>
+							</table>
+						</div>

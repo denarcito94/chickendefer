@@ -1,27 +1,33 @@
 <?php
 require_once "config/datos_conexion.php";
 
-$conexion=mysqli_connect($db_host, $db_user, $db_pass);
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+$user = $_SESSION['user'] ?? ['username' => null];
+$conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
-if (mysqli_connect_errno()) {	
-	echo "no se puede conectar a la base de datos";	
+if (mysqli_connect_errno()) {
+	echo "no se puede conectar a la base de datos";
 	exit();
 }
-mysqli_select_db($conexion, $db_nombre)or die("no se encontro ninguna base de datos");
+mysqli_select_db($conexion, $db_nombre) or die("no se encontro ninguna base de datos");
 mysqli_set_charset($conexion, "utf8");
+$peticion = "SELECT * FROM clientes";
+$resultado = mysqli_query($conexion, $peticion);
 ?>
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Sistema de Gestion Chikendefer</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<html lang="es">
 
-<script type="text/javascript" src="codigo.js"></script>
+<head>
+	<meta charset="utf-8">
+	<title>Sistema de Gestion Chikendefer</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="public/css/main.css">
+
+	<script type="text/javascript" src="codigo.js"></script>
 </head>
 <style>
-	.btn_reg{
+	.btn_reg {
 		background: #0C6094;
 		color: white;
 		width: 100px;
@@ -31,7 +37,8 @@ mysqli_set_charset($conexion, "utf8");
 		border-radius: 5px;
 
 	}
-	.lbl_text{
+
+	.lbl_text {
 		width: 350px;
 		padding: 10px;
 		font-family: sans-serif;
@@ -40,62 +47,128 @@ mysqli_set_charset($conexion, "utf8");
 </style>
 
 <body>
-	<div align="center" style="margin-top: 50px;">
-	<div align="center" style="padding: 20px; color:black ; width: 550px; border: 1px solid #aeadad;box-shadow: 0px 10px 15px #d9d0d0;">
-		<h4 align="center">Registrar Cliente</h4>
-		<form class="was-validated" action="php/insertar_cliente.php" method="get" >
-			<div class="form-group">
-			<input class="form-control" type="text" name="nit" placeholder="Ingrese un nit" required>
-			<br>
-			<input class="form-control" type="text" name="nombre" placeholder="Ingrese un nombre" required><br>
-			<input class="form-control" type="text" name="ape_paterno" placeholder="Ingrese un apellido paterno" required>
-			<br>
-			<input class="form-control" type="text" name="ape_materno" placeholder="Ingrese un apellido materno" required>
-			<br>
-			<input class="form-control" type="text" name="direccion" placeholder="Ingrese su direccion" required>
-      		<br>
-			<input class="form-control" type="text" name="telef" placeholder="Ingrese su telefono" required>
-      		<br>
-			<a class="btn btn-primary" href="menu.php"><i class='fas fa-arrow-left'></i> Volver</a>
-			<input type="submit" name="reg_cliente" value="Registrar" class="btn btn-primary">
+	<div class="container-fluid">
+		<div class="row justify-content-center align-content-center">
+			<div class="col-8 barra">
+				<h4 class="text-light">Logo</h4>
+			</div>
+			<div class="col-4 text-right barra">
+				<ul class="navbar-nav mr-auto">
+					<li>
+						<span href="#" class="px-3 text-light perfil dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-user-circle user mr-2"></i>
+							<?= $user['username'] ?>
+						</span>
+
+						<div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+							<a class="dropdown-item menuperfil cerrar" href="php/logout.php"><i class="fas fa-sign-out-alt m-1"></i>Salir
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</form>
-	</div>
 	</div>
 
-<table style="margin: 20px;">
-	<tr>
-	<td><strong>Nit</strong></td>
-	<td><strong>Nombre</strong></td>
-	<td><strong>Ap. Paterno</strong></td>
-	<td><strong>Ap. Materno</strong></td>
-	<td><strong>Direccion</strong></td>
-	<td><strong>Celular</strong></td>
-	<td><strong>Actualizar</strong></td>
-	<td><strong>Borrar</strong></td>
-</tr>
-<?php
-$peticion="SELECT * FROM clientes";
-$resultado=mysqli_query($conexion,$peticion);
-while ($fila = mysqli_fetch_array($resultado)) {
-	echo '<tr>
-	<form action="php/actualizar_cliente.php?id='.$fila['id'].'" method="post" >
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="nit" value="'.$fila['nit'].'" ></td>	
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="nombre" value="'.$fila['nombre'].'"></td>	
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="ape_paterno" value="'.$fila['apellido_paterno'].'"></td>
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="ape_materno" value="'.$fila['apellido_materno'].'"></td>
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="direccion" value="'.$fila['direccion'].'"></td>
-		<td><input style="width: 216px;" class="lbl_text" type="text" name="telef" value="'.$fila['telefono'].'"></td>
-		<td><input type="submit" value="Actualizar" class="btn btn-primary"></td>		
-	</form>
-		<td><a href="php/eliminar_cliente.php?id='.$fila['id'].'"><button class="btn btn-danger">Borrar</buton></td>
-	</tr>
-	';
-}
-	
-?>
-	</table>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="barra-lateral col-12 col-sm-auto">
+				<nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+					<a id="go" href="admin/#go"><i class="fas fa-home"></i><span>Inicio</span></a>
+					<a id="productos" href="Registro_producto.php#productos"><i class="fas fa-store"></i><span>Productos</span></a>
+					<a id="clientes" href="Registro_cliente.php#clientes"><i class="fas fa-users"></i><span>Clientes</span></a>
+					<a id="pedidos" href="Registro_pedidos.php#pedidos"><i class="fas fa-list"></i><span>Pedidos</span></a>
+				</nav>
+			</div>
+			<main class="main col pl-3">
+				<div class="row text-center">
+					<div class="columna col-12">
+						<!-- FORM -->
+						<div class="mb-3" align="center">
+							<div class="w-75 border shandow rounded p-3">
+								<h4 align="center">Registrar Cliente</h4>
+								<form class="was-validated" action="php/insertar_cliente.php" method="post">
+									<div class="form-group">
+										<input class="form-control" type="text" name="nit" placeholder="Ingrese un nit" required>
+										<br>
+										<input class="form-control" type="text" name="nombre" placeholder="Ingrese un nombre" required><br>
+										<input class="form-control" type="text" name="ape_paterno" placeholder="Ingrese un apellido paterno" required>
+										<br>
+										<input class="form-control" type="text" name="ape_materno" placeholder="Ingrese un apellido materno" required>
+										<br>
+										<input class="form-control" type="text" name="direccion" placeholder="Ingrese su direccion" required>
+										<br>
+										<input class="form-control" type="text" name="telef" placeholder="Ingrese su telefono" required>
+										<br>
+
+										<input type="submit" name="reg_cliente" value="Registrar" class="btn btn-primary">
+									</div>
+									<?php if ($errors) : ?>
+										<div class="card-footer bg-white text-danger">
+											<ul>
+												<?php foreach ($errors as $e) : ?>
+													<li><?= $e ?></li>
+												<?php endforeach ?>
+											</ul>
+										</div>
+									<?php endif ?>
+								</form>
+							</div>
+						</div>
+						<!-- FORM -->
+
+						<!-- TABLE -->
+						<div class="card shadow">
+							<table class="table table-sm .table-responsive">
+								<thead>
+									<tr>
+										<th scope="col">Nit</th>
+										<th scope="col">Nombre</th>
+										<th scope="col">Ap. Paterno</th>
+										<th scope="col">Ap. Materno</th>
+										<th scope="col">Direccion</th>
+										<th scope="col">Celular</th>
+										<th scope="col">Actualizar</th>
+										<th scope="col">Borrar</th>
+										</th>
+								</thead>
+								<tbody>
+									<?php while ($c = mysqli_fetch_array($resultado)) : ?>
+										<tr>
+											<form action="php/actualizar_producto.php?id=<?= $c['id'] ?>" method="post">
+												<th scope="row"><input class="form-control" type="text" name="nit" value="<?= $c['nit'] ?>"></th>
+												<td><input class="form-control" type="text" name="nombre" value="<?= $c['nombre'] ?>"></td>
+												<td><input class="form-control" type="text" name="ape_paterno" value="<?= $c['apellido_paterno'] ?>"></td>
+												<td><input class="form-control" type="text" name="ape_materno" value="<?= $c['apellido_materno'] ?>"></td>
+												<td><input class="form-control" type="text" name="direccion" value="<?= $c['direccion'] ?>"></td>
+												<td><input class="form-control" type="text" name="telef" value="<?= $c['telefono'] ?>"></td>
+												<td><button type="submit" class="btn btn-outline-success btn-sm">Actualizar</button></td>
+											</form>
+											<td><a href="php/eliminar_producto.php?id=<?= $c['id'] ?>" class="btn btn-outline-danger btn-sm">Borrar</a></td>
+										</tr>
+									<?php endwhile ?>
+								</tbody>
+							</table>
+						</div>
+						<!-- TABLE -->
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="https://kit.fontawesome.com/646c794df3.js"></script>
+	<script src="./codigo.js"></script>
 
 
 </body>
+
 </html>
+
+<?php
+
+unset($_SESSION['errors']);

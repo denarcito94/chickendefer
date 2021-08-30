@@ -150,7 +150,7 @@ $resultado = mysqli_query($conexion, $peticion);
 												<td><input class="form-control" type="text" name="telef" value="<?= $c['telefono'] ?>"></td>
 												<td><button type="submit" class="btn btn-outline-success btn-sm">Actualizar</button></td>
 											</form>
-											<td><a href="php/eliminar_producto.php?id=<?= $c['id'] ?>" class="btn btn-outline-danger btn-sm">Borrar</a></td>
+											<td><a href="php/eliminar_cliente.php?id=<?= $c['id'] ?>" class="btn btn-outline-danger btn-sm">Borrar</a></td>
 										</tr>
 									<?php endwhile ?>
 								</tbody>

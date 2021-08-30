@@ -58,5 +58,5 @@ if (!$resultado) {
 }
 
 $_SESSION['status'] = 'Registro completado';
-header("location:" . $path);
+header("location:" . $path . "#clientes");
 exit();

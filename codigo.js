@@ -10,7 +10,7 @@ function anade() {
 }
 
 function setActiveLink() {
-  const urlHash = location.hash;
+  const urlHash = location.hash || "#go";
   const links = document.querySelectorAll(".menu a");
   links.forEach((l) => {
     l.classList.remove("active");

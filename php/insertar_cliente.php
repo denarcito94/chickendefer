@@ -1,5 +1,7 @@
 <?php
 session_start();
+$path = $_SERVER['HTTP_REFERER'];
+$isFieldEmpty = 0;
 $nit = $_POST['nit'];
 $nombre = $_POST['nombre'];
 $apellido_paterno = $_POST['ape_paterno'];
@@ -26,16 +28,15 @@ mysqli_select_db($conexion, $db_nombre) or die("no se encontro ninguna base de d
 
 mysqli_set_charset($conexion, "utf8");
 
+$consulta = "INSERT INTO clientes (nit, nombre, apellido_paterno, apellido_materno, direccion, telefono) 
+							VALUES ('$nit', '$nombre', '$apellido_paterno', '$apellido_materno', '$direccion', '$telefono')";
 
-
-$consulta = "INSERT INTO clientes (nit, nombre, apellido_paterno, apellido_materno, direccion, telefono) VALUES ($nit, '$nombre', '$apellido_paterno', '$apellido_materno', '$direccion', $telefono)";
 
 $checkNit = "SELECT id FROM clientes WHERE nit = '${nit}'";
 $resultado = mysqli_query($conexion, $checkNit);
 $record = mysqli_num_rows($resultado);
 
 if ($record > 0) {
-	$path = $_SERVER['HTTP_REFERER'];
 	$_SESSION['errors'] = [
 		'NIT ya registrado'
 	];
@@ -43,4 +44,19 @@ if ($record > 0) {
 	exit();
 }
 
-echo json_encode($record);
+
+$resultado = mysqli_query($conexion, $consulta);
+echo json_encode($resultado);
+
+
+if (!$resultado) {
+	$_SESSION['errors'] = [
+		'No se pudo completar su operacion, verifique su datos e intente de nuevo'
+	];
+	header("location:" . $path);
+	exit();
+}
+
+$_SESSION['status'] = 'Registro completado';
+header("location:" . $path);
+exit();

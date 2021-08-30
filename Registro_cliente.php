@@ -3,6 +3,7 @@ require_once "config/datos_conexion.php";
 
 session_start();
 $errors = $_SESSION['errors'] ?? [];
+$status = $_SESSION['status'] ?? null;
 $user = $_SESSION['user'] ?? ['username' => null];
 $conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
@@ -107,9 +108,14 @@ $resultado = mysqli_query($conexion, $peticion);
 										<div class="card-footer bg-white text-danger">
 											<ul>
 												<?php foreach ($errors as $e) : ?>
-													<li><?= $e ?></li>
+													<li><i class="fas fa-times"></i> <?= $e ?></li>
 												<?php endforeach ?>
 											</ul>
+										</div>
+									<?php endif ?>
+									<?php if ($status) : ?>
+										<div class="card-footer bg-white text-success">
+											<span><?= $status ?> <i class="fas fa-check-circle"></i></span>
 										</div>
 									<?php endif ?>
 								</form>
@@ -171,4 +177,4 @@ $resultado = mysqli_query($conexion, $peticion);
 
 <?php
 
-unset($_SESSION['errors']);
+unset($_SESSION['errors'], $_SESSION['status']);

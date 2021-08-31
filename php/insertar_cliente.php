@@ -9,13 +9,8 @@ $apellido_materno = $_POST['ape_materno'];
 $direccion = $_POST['direccion'];
 $telefono = $_POST['telef'];
 
-header('Content-Type: application/json');
-// echo json_encode($_POST);
 
 require_once "../config/datos_conexion.php";
-
-
-
 $conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
 if (mysqli_connect_errno()) {
@@ -40,7 +35,8 @@ if ($record > 0) {
 	$_SESSION['errors'] = [
 		'NIT ya registrado'
 	];
-	header("location:" . $path);
+	mysqli_close($conexion);
+	header("location:" . $path . "#clientes");
 	exit();
 }
 
@@ -53,7 +49,8 @@ if (!$resultado) {
 	$_SESSION['errors'] = [
 		'No se pudo completar su operacion, verifique su datos e intente de nuevo'
 	];
-	header("location:" . $path);
+	mysqli_close($conexion);
+	header("location:" . $path . "#clientes");
 	exit();
 }
 

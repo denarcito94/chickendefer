@@ -1,6 +1,8 @@
 <?php
 require_once "config/datos_conexion.php";
 session_start();
+$errors = $_SESSION['errors'] ?? [];
+$status = $_SESSION['status'] ?? null;
 $user = $_SESSION['user'] ?? ['username' => null];
 
 $conexion = mysqli_connect($db_host, $db_user, $db_pass);
@@ -109,6 +111,20 @@ mysqli_close($conexion);
 											<input type="file" name="imagen"><br><br>
 											<input type="submit" name="reg_producto" value="Registrar" class="btn btn-primary">
 										</div>
+										<?php if ($errors) : ?>
+											<div class="card-footer bg-white text-danger">
+												<ul>
+													<?php foreach ($errors as $e) : ?>
+														<li><i class="fas fa-times"></i> <?= $e ?></li>
+													<?php endforeach ?>
+												</ul>
+											</div>
+										<?php endif ?>
+										<?php if ($status) : ?>
+											<div class="card-footer bg-white text-success">
+												<span><?= $status ?> <i class="fas fa-check-circle"></i></span>
+											</div>
+										<?php endif ?>
 									</form>
 								</div>
 							</div>
@@ -162,3 +178,5 @@ mysqli_close($conexion);
 </body>
 
 </html>
+<?php
+unset($_SESSION['errors'], $_SESSION['status']);

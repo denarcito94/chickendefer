@@ -141,7 +141,7 @@
 #shop-card {
   position: relative;
 }
-#shop-card .card-footer {
+#shop-card .card-body {
   overflow-y: auto;
 }
 #shop-card .card-footer {

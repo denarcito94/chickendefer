@@ -86,23 +86,27 @@ $resultado = mysqli_query($conexion, $consulta);
 				<div id="shop-card" class="col-6 h-75 card pt-3">
 					<h5 class="mb-3">Lista de productos</h5>
 					<?php while ($p = mysqli_fetch_array($resultado)) : ?>
-						<form class="card shadow mb-3 rounded" style="max-width: 540px;">
+						<div class="card shadow mb-3 rounded" style="max-width: 540px;">
 							<div class="row no-gutters">
 								<div class="col-md-4">
 									<img class="img-fluid h-100" src="imagen/<?= $p['imagen'] ?>" alt="image product">
 								</div>
 								<div class="col-md-8">
-									<div class="card-body">
+									<form onsubmit="getItemForm(event)" method="POST" class="card-body">
+										<input type="hidden" name="id" value="<?= $p['id'] ?>">
+										<input type="hidden" name="name" value="<?= $p['nombre'] ?>">
+										<input type="hidden" name="codigo" value="<?= $p['codigo'] ?>">
+										<input type="hidden" name="price" value="<?= $p['precio'] ?>">
 										<h5 class="card-title"><?= $p['nombre'] ?> - COD <?= $p['codigo'] ?></h5>
 										<p class="card-text">Precio: <span class="text-success"><?= $p['precio'] ?> Bs.</span></p>
 										<p class="card-text">
-											<input class="form-control mb-2" type="number" value="0">
+											<input class="form-control mb-2" type="number" name="count" value="0">
 											<button type="submit" class="btn btn-sm btn-success">Agregar</button>
 										</p>
-									</div>
+									</form>
 								</div>
 							</div>
-						</form>
+						</div>
 					<?php endwhile ?>
 				</div>
 				<div class="col-5 h-75 card p-0">

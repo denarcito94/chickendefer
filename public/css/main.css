@@ -124,13 +124,33 @@
 .main {
   height: 100vh;
   padding-top: 1rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: 3rem;
   overflow: auto;
 }
 
 .main .columna {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.main [class*="col"] {
+  min-height: 90%;
+  overflow-y: auto;
+}
+
+#shop-card {
+  position: relative;
+}
+#shop-card .card-footer {
+  overflow-y: auto;
+}
+#shop-card .card-footer {
+  bottom: 0;
+}
+
+#shop-card span {
+  color: #383838;
+  font-weight: 600;
 }
 
 /*mediaquerys*/

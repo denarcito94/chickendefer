@@ -1,31 +1,34 @@
-<?php 
+<?php
 require_once "config/datos_conexion.php";
 
-$conexion=mysqli_connect($db_host, $db_user, $db_pass);
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+$status = $_SESSION['status'] ?? null;
+$user = $_SESSION['user'] ?? ['username' => null];
+$conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
 if (mysqli_connect_errno()) {
-	
 	echo "no se puede conectar a la base de datos";
-	
 	exit();
-
 }
-mysqli_select_db($conexion, $db_nombre)or die("no se encontro ninguna base de datos");
+mysqli_select_db($conexion, $db_nombre) or die("no se encontro ninguna base de datos");
 mysqli_set_charset($conexion, "utf8");
-
+$consulta = "SELECT * FROM productos";
+$resultado = mysqli_query($conexion, $consulta);
 ?>
-
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Registro_Pedidos</title>
+<html lang="es">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<head>
+	<meta charset="utf-8">
+	<title>Sistema de Gestion Chikendefer</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="public/css/main.css">
+
+
 </head>
 <style>
-	.btn_reg{
+	.btn_reg {
 		background: #0C6094;
 		color: white;
 		width: 100px;
@@ -35,7 +38,8 @@ mysqli_set_charset($conexion, "utf8");
 		border-radius: 5px;
 
 	}
-	.lbl_text{
+
+	.lbl_text {
 		width: 350px;
 		padding: 10px;
 		font-family: sans-serif;
@@ -43,44 +47,93 @@ mysqli_set_charset($conexion, "utf8");
 	}
 </style>
 
-<body>
-	<div align="center" style="margin-top: 50px;">
-	<div align="center" style="padding: 10px; color:black ; width: 400px; ">
-		<h2 align="center">Detalle Pedidos</h2>
-		<a class="btn btn-primary" href="menu.php"><i class='fas fa-arrow-left'></i> Volver</a>
-	
+<body style="overflow-x: hidden;">
+	<div class="container-fluid">
+		<div class="row justify-content-center align-content-center">
+			<div class="col-8 barra">
+				<h4 class="text-light">Logo</h4>
+			</div>
+			<div class="col-4 text-right barra">
+				<ul class="navbar-nav mr-auto">
+					<li>
+						<span href="#" class="px-3 text-light perfil dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-user-circle user mr-2"></i>
+							<?= $user['username'] ?>
+						</span>
+
+						<div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+							<a class="dropdown-item menuperfil cerrar" href="php/logout.php"><i class="fas fa-sign-out-alt m-1"></i>Salir
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="barra-lateral col-12 col-sm-auto">
+				<nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+					<a id="go" href="admin/#go"><i class="fas fa-home"></i><span>Inicio</span></a>
+					<a id="productos" href="Registro_producto.php#productos"><i class="fas fa-store"></i><span>Productos</span></a>
+					<a id="clientes" href="Registro_cliente.php#clientes"><i class="fas fa-users"></i><span>Clientes</span></a>
+					<a id="pedidos" href="Registro_pedidos.php#pedidos"><i class="fas fa-list"></i><span>Pedidos</span></a>
+				</nav>
+			</div>
+			<main class="main col px-5 row justify-content-between">
+				<!-- GRID PEDIDOS -->
+				<div id="shop-card" class="col-6 h-75 card pt-3">
+					<h5 class="mb-3">Lista de productos</h5>
+					<?php while ($p = mysqli_fetch_array($resultado)) : ?>
+						<form class="card shadow mb-3 rounded" style="max-width: 540px;">
+							<div class="row no-gutters">
+								<div class="col-md-4">
+									<img class="img-fluid h-100" src="imagen/<?= $p['imagen'] ?>" alt="image product">
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title"><?= $p['nombre'] ?> - COD <?= $p['codigo'] ?></h5>
+										<p class="card-text">Precio: <span class="text-success"><?= $p['precio'] ?> Bs.</span></p>
+										<p class="card-text">
+											<input class="form-control mb-2" type="number" value="0">
+											<button type="submit" class="btn btn-sm btn-success">Agregar</button>
+										</p>
+									</div>
+								</div>
+							</div>
+						</form>
+					<?php endwhile ?>
+				</div>
+				<div class="col-5 h-75 card p-0">
+					<div class="card-header">
+						<h5>Carrito</h5>
+					</div>
+					<div class="card-body">
+
+					</div>
+					<div class="card-footer">
+						<span>Total : 1200 Bs.</span><br>
+						<span>Total de Productos : 5</span>
+					</div>
+				</div>
+				<!-- GRID PEDIDOS -->
+			</main>
+		</div>
 	</div>
 
 
-<table style="margin: 20px;">
-	<tr>
-	<td><strong>Producto</strong></td>
-	<td><strong>Costo</strong></td>
-	<td><strong>cantidad</strong></td>
-	<td><strong>Cliente</strong></td>
-	<td><strong>Imprimir</strong></td>
-</tr>
-<?php
-$peticion3="SELECT concat(c.nombre, ' ',c.apellido_paterno, ' ',c.apellido_materno) as persona, c.id as idcliente,p.producto_preparado as produpre,dp.cantidad as cant,dp.detalle as detallprod FROM pedidos p, detalle_pedidos dp,clientes c where p.id=dp.id_pedido and c.id=p.id_cliente";
-$resultado3=mysqli_query($conexion,$peticion3);
-while ($fila3 = mysqli_fetch_array($resultado3)) {
-	echo '<tr>
-	<form action="imprimir_pedido.php" method="post" >
-	<td hidden><input hidden class="lbl_text" type="text" name="idc" value="'.$fila3['idcliente'].'" ></td>
-		<td><input class="lbl_text" type="text" name="detalle" value="'.$fila3['detallprod'].'" ></td>	
-		<td><input class="lbl_text" type="text" name="pp" value="'.$fila3['produpre'].'"></td>	
-		<td><input class="lbl_text" type="text" name="cantidad" value="'.$fila3['cant'].'"></td>
-		<td><input class="lbl_text" type="text" name="nombre" value="'.$fila3['persona'].'"></td>	
-		<td><input type="submit" name="reg_detalle" value="Imprimir" class="btn btn-secondary"></td>	
-	</form>
-	
-	</tr>
-	';
-}
-	
-?>
-	</table>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="https://kit.fontawesome.com/646c794df3.js"></script>
+	<script src="./codigo.js"></script>
+
 
 </body>
+
 </html>
+
+<?php
+
+unset($_SESSION['errors'], $_SESSION['status']);

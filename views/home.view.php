@@ -26,7 +26,7 @@
             <?php endforeach ?>
           </ul>
         </div>
-      <? endif ?>
+      <?php endif ?>
     </div>
   </div>
 </div>

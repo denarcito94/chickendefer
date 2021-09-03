@@ -111,14 +111,29 @@ $resultado = mysqli_query($conexion, $consulta);
 				</div>
 				<div class="col-5 h-75 card p-0">
 					<div class="card-header">
-						<h5>Carrito</h5>
+						<div class="header-CTA d-flex justify-content-between">
+							<h5>Carrito</h5>
+							<div>
+								<button class="btn btn-sm btn-danger" onclick="cleanCart()">Vaciar lista <i class="fas fa-trash"></i></button>
+								<button class="btn btn-sm btn-success">Procesar <i class="fas fa-check"></i></button>
+							</div>
+						</div>
+						<hr>
+						<div class="header-datail d-flex justify-content-between">
+							<span class="text-dark">Nombre</span>
+							<span class="text-dark">Precio</span>
+							<span class="text-dark">Cantidad</span>
+							<span class="text-dark">Total</span>
+						</div>
 					</div>
-					<div class="card-body">
-
+					<div class="card-body" style="overflow-y: auto;">
+						<ul id="cart-list" class="list-group">
+							<li class="list-group-item">Carrito Vacio :(</li>
+						</ul>
 					</div>
 					<div class="card-footer">
-						<span>Total : 1200 Bs.</span><br>
-						<span>Total de Productos : 5</span>
+						<span id="total">Total a pagar: 0 Bs.</span><br>
+						<span id="count-products">Total de Productos : 0</span>
 					</div>
 				</div>
 				<!-- GRID PEDIDOS -->
@@ -132,6 +147,7 @@ $resultado = mysqli_query($conexion, $consulta);
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/646c794df3.js"></script>
 	<script src="./codigo.js"></script>
+	<script src="./cart.js"></script>
 
 
 </body>

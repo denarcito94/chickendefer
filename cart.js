@@ -1,6 +1,7 @@
 // INIT VARS
 let listProducts = [];
 let listClient = [];
+let client = null;
 let listCart = document.querySelector("#cart-list");
 let boxSearch = document.querySelector("#box-search");
 // GET SELECT PRODUTS LIST
@@ -56,6 +57,7 @@ function printView() {
 function cleanCart() {
   listProducts = [];
   listClient = [];
+  client = [];
   listCart.innerHTML = `<li class="list-group-item">Carrito Vacio :(</li>`;
   document.querySelector("#total").textContent = `Total a pagar : ${0}Bs.`;
   document.querySelector(
@@ -129,7 +131,7 @@ function closeSearchClient() {
 function selectClient(index) {
   if (index < 0) return console.error("Expected Object Client");
 
-  let client = listClient[index];
+  client = listClient[index];
 
   document.querySelector("#data-client").innerHTML = `
     <span><b>Cliente:</b> ${client.nit} - ${
@@ -146,4 +148,22 @@ function handlerInputNumber(e) {
   if ($target.value < 0) return ($target.value = 0);
 
   $target.value = $target.value.replace(/[a-z]/gi, "");
+}
+
+// PROCESS CART AND SEND DATA
+function processCart() {
+  let total = 0;
+  listProducts.forEach((i) => {
+    total += parseInt(i.price * i.count);
+  });
+
+  let data = {
+    total,
+    products: listProducts,
+    client,
+  };
+
+  if (!data.client) return alertify.error("No has seleccionado un cliente");
+  if (!data.products || data.products.length < 1)
+    return alertify.error("El pedido no tiene productos para procesar");
 }

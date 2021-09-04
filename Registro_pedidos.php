@@ -25,8 +25,8 @@ $resultado = mysqli_query($conexion, $consulta);
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="public/css/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
 </head>
 <style>
 	.btn_reg {
@@ -135,7 +135,7 @@ $resultado = mysqli_query($conexion, $consulta);
 							<div>
 								<button class="btn btn-sm btn-danger" onclick="cleanCart()">Cancelar <i class="fas fa-trash"></i></button>
 								<button class="btn btn-sm btn-primary" onclick="openSearchClient()">Agregar Cliente <i class="fas fa-user-plus"></i></button>
-								<button class="btn btn-sm btn-success">Procesar <i class="fas fa-check"></i></button>
+								<button class="btn btn-sm btn-success" onclick="processCart()">Procesar <i class="fas fa-check"></i></button>
 							</div>
 						</div>
 					</div>
@@ -163,11 +163,13 @@ $resultado = mysqli_query($conexion, $consulta);
 		</div>
 	</div>
 
+
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/646c794df3.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	<script src="./codigo.js"></script>
 	<script src="./cart.js"></script>
 

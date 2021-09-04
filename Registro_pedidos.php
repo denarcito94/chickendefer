@@ -84,7 +84,7 @@ $resultado = mysqli_query($conexion, $consulta);
 			</div>
 			<main class="main col px-5 row justify-content-between">
 				<!-- GRID PEDIDOS -->
-				<div id="shop-card" class="col-6 h-75 card pt-3">
+				<div id="shop-card" class="col-6 h-75 card pt-3 shadow">
 					<h5 class="mb-3">Lista de productos</h5>
 					<?php while ($p = mysqli_fetch_array($resultado)) : ?>
 						<div class="card shadow mb-3 rounded" style="max-width: 540px;">
@@ -110,26 +110,17 @@ $resultado = mysqli_query($conexion, $consulta);
 						</div>
 					<?php endwhile ?>
 				</div>
-				<div class="col-5 h-75 card p-0">
-					<div class="card-header">
-						<div class="header-CTA d-flex justify-content-between">
-							<h5 class="mb-3">Carrito</h5>
-							<div>
-								<button class="btn btn-sm btn-danger" onclick="cleanCart()">Vaciar lista <i class="fas fa-trash"></i></button>
-								<button class="btn btn-sm btn-success">Procesar <i class="fas fa-check"></i></button>
-								<button class="btn btn-sm btn-primary" onclick="openSearchClient()">Agregar Cliente <i class="fas fa-user-plus"></i></button>
-							</div>
-						</div>
-						<hr>
+				<div class="col-5 h-75 card p-0 shadow">
+					<div class="card-header pb-5">
+						<span class="h5">Pedido</span>
 						<div id="data-client" class="d-flex flex-column">
 							<span>Sin cliente</span>
 						</div>
-						<hr>
-						<div class="header-datail d-flex justify-content-between">
-							<span class="text-dark">Nombre</span>
-							<span class="text-dark">Precio</span>
-							<span class="text-dark">Cantidad</span>
-							<span class="text-dark">Total</span>
+						<div class="header-datail d-flex justify-content-between align-items-center">
+							<b class="text-dark">Nombre</b>
+							<b class="text-dark">Precio</b>
+							<b class="text-dark">Cantidad</b>
+							<b class="text-dark">Total</b>
 						</div>
 					</div>
 					<div class="card-body" style="overflow-y: auto;">
@@ -140,6 +131,13 @@ $resultado = mysqli_query($conexion, $consulta);
 					<div class="card-footer">
 						<span id="total">Total a pagar: 0 Bs.</span><br>
 						<span id="count-products">Total de Productos : 0</span>
+						<div class="header-CTA pt-2">
+							<div>
+								<button class="btn btn-sm btn-danger" onclick="cleanCart()">Cancelar <i class="fas fa-trash"></i></button>
+								<button class="btn btn-sm btn-primary" onclick="openSearchClient()">Agregar Cliente <i class="fas fa-user-plus"></i></button>
+								<button class="btn btn-sm btn-success">Procesar <i class="fas fa-check"></i></button>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- GRID PEDIDOS -->

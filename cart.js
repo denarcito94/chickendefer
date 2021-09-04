@@ -51,11 +51,13 @@ function printView() {
 }
 function cleanCart() {
   listProducts = [];
+  listClient = [];
   listCart.innerHTML = `<li class="list-group-item">Carrito Vacio :(</li>`;
   document.querySelector("#total").textContent = `Total a pagar : ${0}Bs.`;
   document.querySelector(
     "#count-products"
   ).textContent = `Total de Productos : ${listProducts.length}`;
+  document.querySelector("#data-client").innerHTML = "<span>Sin cliente</span>";
 }
 
 function deleteItemCart(e, i) {

@@ -1,5 +1,7 @@
 let listProducts = [];
+let listClient = [];
 let listCart = document.querySelector("#cart-list");
+let boxSearch = document.querySelector("#box-search");
 function getItemForm(e) {
   e.preventDefault();
   const $target = e.target;
@@ -84,4 +86,46 @@ function addCart(p = null) {
     "#count-products"
   ).textContent = `Total de Productos : ${listProducts.length}`;
   printView();
+}
+
+async function search() {
+  let $input = document.querySelector("#search-client");
+
+  let res = await axios.get(`php/ajax_client.php?q=${$input.value}`);
+  let { data } = res;
+  // console.log(data.body);
+  let items = "";
+  data.body.map((c, i) => {
+    listClient.push(c);
+    items += `<li onclick="selectClient(${i})" class="list-group-item mb-3 shadow-sm animate__animated animate__fadeInLeft animate__faster">
+      <b>NIT: ${c.nit} - Nombres: ${c.names} ${c.last_name} - Direccion: ${c.address} - Telefono ${c.phone}</b>
+      </li>`;
+  });
+
+  document.querySelector("#client-list").innerHTML = items;
+}
+
+function openSearchClient() {
+  boxSearch.classList.remove("d-none");
+}
+
+function closeSearchClient() {
+  boxSearch.classList.add("d-none");
+  document.querySelector("#client-list").innerHTML = "";
+  listClient = [];
+}
+
+function selectClient(index) {
+  if (index < 0) return console.error("Expected Object Client");
+
+  let client = listClient[index];
+
+  document.querySelector("#data-client").innerHTML = `
+    <span><b>Cliente:</b> ${client.nit} - ${
+    client.names + " " + client.last_name
+  }</span>
+    <span><b>Direccion:</b> ${client.address}</span>
+    <span><b>Telefono:</b> ${client.phone}</span>
+  `;
+  closeSearchClient();
 }

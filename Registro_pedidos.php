@@ -24,6 +24,7 @@ $resultado = mysqli_query($conexion, $consulta);
 	<title>Sistema de Gestion Chikendefer</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="public/css/main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
 </head>
@@ -112,11 +113,16 @@ $resultado = mysqli_query($conexion, $consulta);
 				<div class="col-5 h-75 card p-0">
 					<div class="card-header">
 						<div class="header-CTA d-flex justify-content-between">
-							<h5>Carrito</h5>
+							<h5 class="mb-3">Carrito</h5>
 							<div>
 								<button class="btn btn-sm btn-danger" onclick="cleanCart()">Vaciar lista <i class="fas fa-trash"></i></button>
 								<button class="btn btn-sm btn-success">Procesar <i class="fas fa-check"></i></button>
+								<button class="btn btn-sm btn-primary" onclick="openSearchClient()">Agregar Cliente <i class="fas fa-user-plus"></i></button>
 							</div>
+						</div>
+						<hr>
+						<div id="data-client" class="d-flex flex-column">
+							<span>Sin cliente</span>
 						</div>
 						<hr>
 						<div class="header-datail d-flex justify-content-between">
@@ -140,8 +146,26 @@ $resultado = mysqli_query($conexion, $consulta);
 			</main>
 		</div>
 	</div>
+	<!-- BOX SEARCH CLIENTES -->
+	<div id="box-search" class="box-search card shadow rounded d-none">
+		<div class="card-header">
+			<div class="d-flex justify-content-between mb-3">
+				<span class="d-block h4">Clientes</span>
+				<button class="btn btn-sm btn-outline-danger" onclick="closeSearchClient()">Cancelar <i class="fas fa-times-circle"></i></button>
+			</div>
+			<div class="d-flex justify-content-between">
+				<input type="text" class="form-control mr-2" id="search-client" placeholder="Ingresa el NIT o Nombre">
+				<button class="btn btn-sm btn-outline-primary" onclick="search()">Buscar</button>
+			</div>
+		</div>
+		<div class="card-body" style="overflow-x: hidden; overflow-y: auto;">
+			<ul id="client-list" class="list-group">
 
+			</ul>
+		</div>
+	</div>
 
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>

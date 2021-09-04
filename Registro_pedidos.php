@@ -101,7 +101,7 @@ $resultado = mysqli_query($conexion, $consulta);
 										<h5 class="card-title"><?= $p['nombre'] ?> - COD <?= $p['codigo'] ?></h5>
 										<p class="card-text">Precio: <span class="text-success"><?= $p['precio'] ?> Bs.</span></p>
 										<p class="card-text">
-											<input class="form-control mb-2" type="number" name="count" value="0">
+											<input class="form-control mb-2" type="number" onchange="handlerInputNumber(event)" name="count" value="0">
 											<button type="submit" class="btn btn-sm btn-success">Agregar</button>
 										</p>
 									</form>

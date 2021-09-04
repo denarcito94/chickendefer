@@ -1,7 +1,9 @@
+// INIT VARS
 let listProducts = [];
 let listClient = [];
 let listCart = document.querySelector("#cart-list");
 let boxSearch = document.querySelector("#box-search");
+// GET SELECT PRODUTS LIST
 function getItemForm(e) {
   e.preventDefault();
   const $target = e.target;
@@ -19,7 +21,7 @@ function getItemForm(e) {
 
   $target.reset();
 }
-
+//  RENDER PRODUCTS IN CART
 function printView() {
   if (!listProducts.length >= 1) {
     cleanCart();
@@ -49,6 +51,8 @@ function printView() {
     "#count-products"
   ).textContent = `Total de Productos : ${listProducts.length}`;
 }
+
+// RESET AND CLEAR DATA CART
 function cleanCart() {
   listProducts = [];
   listClient = [];
@@ -60,6 +64,7 @@ function cleanCart() {
   document.querySelector("#data-client").innerHTML = "<span>Sin cliente</span>";
 }
 
+// DELETE ITEM CART
 function deleteItemCart(e, i) {
   let parent = e.parentNode;
 
@@ -68,6 +73,7 @@ function deleteItemCart(e, i) {
   printView();
 }
 
+// ADD ITEM CART
 function addCart(p = null) {
   if (!p) return console.error("Expected parameter object product");
 
@@ -90,6 +96,7 @@ function addCart(p = null) {
   printView();
 }
 
+// SEARCH CLIENT BY NIT OR NAME
 async function search() {
   let $input = document.querySelector("#search-client");
 
@@ -107,16 +114,18 @@ async function search() {
   document.querySelector("#client-list").innerHTML = items;
 }
 
+// OPEN BOX SEARCH CLIENT
 function openSearchClient() {
   boxSearch.classList.remove("d-none");
 }
-
+// CLOSE BOX SEARCH CLIENT
 function closeSearchClient() {
   boxSearch.classList.add("d-none");
   document.querySelector("#client-list").innerHTML = "";
   listClient = [];
 }
 
+// SELECT CLIENT LIST AND RENDER IN CART
 function selectClient(index) {
   if (index < 0) return console.error("Expected Object Client");
 
@@ -130,4 +139,11 @@ function selectClient(index) {
     <span><b>Telefono:</b> ${client.phone}</span>
   `;
   closeSearchClient();
+}
+// HANDLER INPUT TYPE NUMBER
+function handlerInputNumber(e) {
+  let $target = e.target;
+  if ($target.value < 0) return ($target.value = 0);
+
+  $target.value = $target.value.replace(/[a-z]/gi, "");
 }

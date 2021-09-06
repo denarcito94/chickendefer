@@ -110,7 +110,10 @@ $resultado = mysqli_query($conexion, $consulta);
 						</div>
 					<?php endwhile ?>
 				</div>
-				<div class="col-5 h-75 card p-0 shadow">
+				<div id="cart" class="col-5 h-75 card p-0 shadow">
+					<div class="card-loader d-none">
+						<span class="card-spinner"></span>
+					</div>
 					<div class="card-header pb-5">
 						<span class="h5">Pedido</span>
 						<div id="data-client" class="d-flex flex-column">

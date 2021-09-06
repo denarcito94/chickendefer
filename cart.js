@@ -4,6 +4,8 @@ let listClient = [];
 let client = null;
 let listCart = document.querySelector("#cart-list");
 let boxSearch = document.querySelector("#box-search");
+let boxSpinner = document.querySelector(".card-loader");
+let spinner = document.querySelector(".card-spinner");
 // GET SELECT PRODUTS LIST
 function getItemForm(e) {
   e.preventDefault();
@@ -172,12 +174,25 @@ function processCart() {
     url: "./php/ajax_pedido.php",
     data: { ...data },
     dataType: "json",
+    beforeSend: function () {
+      boxSpinner.classList.remove("d-none");
+      boxSpinner.classList.add("d-flex");
+      spinner.classList.add("is-loading");
+    },
   })
+
     .done(function (res) {
-      console.log(res);
       if (res.statusCode >= 400) return alertify.error(res.body);
 
       alertify.success(res.body);
+      listProducts = [];
+      listClient = [];
+      client = null;
+      printView();
+
+      boxSpinner.classList.remove("d-flex");
+      boxSpinner.classList.add("d-none");
+      spinner.classList.remove("is-loading");
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       console.error(

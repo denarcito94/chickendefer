@@ -1,3 +1,15 @@
+/* ANIMATE LOADER */
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* SCROLLBAR STYLE */
 ::-webkit-scrollbar {
   width: 6px;
@@ -179,6 +191,35 @@ body {
   background-color: rgba(13, 39, 156, 0.712);
   color: #fff;
 }
+
+#cart {
+  position: relative;
+}
+
+#cart .card-loader {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-loader .card-spinner {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid;
+  border-color: #2e78ef #ccc #ccc #ccc;
+  transition: all ease 0.3s;
+}
+
+.card-spinner.is-loading {
+  animation: spinner 1s 0.5s infinite;
+}
+
 /*mediaquerys*/
 
 @media screen and (max-width: 1300px) {

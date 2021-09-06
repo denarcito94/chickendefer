@@ -166,4 +166,22 @@ function processCart() {
   if (!data.client) return alertify.error("No has seleccionado un cliente");
   if (!data.products || data.products.length < 1)
     return alertify.error("El pedido no tiene productos para procesar");
+
+  $.ajax({
+    type: "POST",
+    url: "./php/ajax_pedido.php",
+    data: { ...data },
+    dataType: "json",
+  })
+    .done(function (res) {
+      console.log(res);
+      if (res.statusCode >= 400) return alertify.error(res.body);
+
+      alertify.success(res.body);
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      console.error(
+        "The following error occured: " + textStatus + " " + errorThrown
+      );
+    });
 }

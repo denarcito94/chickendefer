@@ -182,7 +182,12 @@ function processCart() {
   })
 
     .done(function (res) {
-      if (res.statusCode >= 400) return alertify.error(res.body);
+      if (res.statusCode >= 400) {
+        boxSpinner.classList.remove("d-flex");
+        boxSpinner.classList.add("d-none");
+        spinner.classList.remove("is-loading");
+        return alertify.error(res.body);
+      }
 
       alertify.success(res.body);
       listProducts = [];

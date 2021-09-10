@@ -18,7 +18,6 @@ mysqli_set_charset($conexion, "utf8");
 
 $query = "SELECT p.id, date_format(p.fecha, '%d/%m/%Y %H:%i %p') as fecha, p.total,c.nit, CONCAT(c.nombre, ' ', c.apellido_paterno) as nombres, c.direccion, c.telefono FROM pedidos as p INNER JOIN clientes as c ON c.id = p.id_cliente";
 
-$peticion = "SELECT * FROM productos";
 $resultado = mysqli_query(
 	$conexion,
 	$query
@@ -139,14 +138,13 @@ mysqli_close($conexion);
 		</div> -->
 		<div class="card-header">
 			<div class="d-flex justify-content-between">
-				<span class=" d-block h5">Pedido <b x-text="'N°' + detail.id"></b></span>
+				<span class=" d-block h5" x-text="'Pedido N°' + detail.id"></span>
 				<button x-on:click="showModal = false" class="btn btn-sm btn-danger"><i class="fas fa-times-circle"></i></button>
 			</div>
-			<span class="h6"><b>Detalles:</span>
 			<hr>
-			<span class="d-block">Cliente: <b x-text="detail.nombres"></b></span>
-			<span class="d-block">Telefono: <b x-text="detail.telefono"></b></span>
-			<span class="d-block">Direccion: <b x-text="detail.direccion"></b></span>
+			<span class="d-block" x-text="'Cliente: ' + detail.nombres"></span>
+			<span class="d-block" x-text="'Telefono: ' + detail.telefono"></span>
+			<span class="d-block" x-text="'Direccion: ' + detail.direccion"></span>
 		</div>
 
 		<div class="card-body" style="overflow-x: hidden; overflow-y: auto;">
@@ -154,10 +152,10 @@ mysqli_close($conexion);
 				<template x-for="p in products">
 					<li class="list-group-item mb-2">
 						<div class="d-flex justify-content-between">
-							<span class="d-block"><b>Nombre</b></span>
-							<span class="d-block"><b>Precio</b></span>
-							<span class="d-block"><b>Cantidad</b></span>
-							<span class="d-block"><b>Total</b></span>
+							<span class="d-block">Nombre</span>
+							<span class="d-block">Precio</span>
+							<span class="d-block">Cantidad</span>
+							<span class="d-block">Total</span>
 						</div>
 						<div class="d-flex justify-content-between">
 							<span x-text="p.nombre"></span>
@@ -171,8 +169,8 @@ mysqli_close($conexion);
 			</ul>
 		</div>
 		<div class="card-footer d-flex flex-column">
-			<span>Productos: <b x-text="products.length"></b></span>
-			<span>Total: <b x-text="detail.total + 'Bs.'"></b></span>
+			<span x-text="'Productos: ' + products.length"></span>
+			<span x-text="'Total: ' + detail.total + 'Bs.'"></span>
 		</div>
 	</div>
 

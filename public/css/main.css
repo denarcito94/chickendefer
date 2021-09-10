@@ -169,7 +169,8 @@ body {
   font-weight: 600;
 }
 
-.box-search {
+.box-search,
+.modal-detail {
   position: absolute;
   top: 20%;
   right: 25%;
@@ -177,6 +178,11 @@ body {
   height: 30rem;
 
   z-index: 100;
+}
+
+.modal-detail {
+  top: 15%;
+  height: 36rem;
 }
 
 #client-list {

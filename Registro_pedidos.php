@@ -79,8 +79,8 @@ $resultado = mysqli_query($conexion, $consulta);
 					<a id="go" href="admin/#go"><i class="fas fa-home"></i><span>Inicio</span></a>
 					<a id="productos" href="Registro_producto.php#productos"><i class="fas fa-store"></i><span>Productos</span></a>
 					<a id="clientes" href="Registro_cliente.php#clientes"><i class="fas fa-users"></i><span>Clientes</span></a>
-					<a id="pedidos" href="Registro_pedidos.php#pedidos"><i class="fas fa-plus"></i><span> Nuevo Pedido</span></a>
-					<a id="pedidos" href="Registro_pedidos.php#pedidos"><i class="fas fa-clipboard-list"></i><span>Pedidos</span></a>
+					<a id="newpedidos" href="Registro_pedidos.php#newpedidos"><i class="fas fa-plus"></i><span> Nuevo Pedido</span></a>
+					<a id="pedidos" href="pedidos.php#pedidos"><i class="fas fa-clipboard-list"></i><span>Pedidos</span></a>
 				</nav>
 			</div>
 			<main class="main col px-5 row justify-content-between">

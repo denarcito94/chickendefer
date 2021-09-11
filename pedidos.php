@@ -16,7 +16,7 @@ mysqli_select_db($conexion, $db_nombre) or die("no se encontro ninguna base de d
 
 mysqli_set_charset($conexion, "utf8");
 
-$query = "SELECT p.id, date_format(p.fecha, '%d/%m/%Y %H:%i %p') as fecha, p.total,c.nit, CONCAT(c.nombre, ' ', c.apellido_paterno) as nombres, c.direccion, c.telefono FROM pedidos as p INNER JOIN clientes as c ON c.id = p.id_cliente";
+$query = "SELECT p.id, date_format(p.fecha, '%d/%m/%Y %H:%i %p') as fecha, p.total,c.nit, CONCAT(c.nombre, ' ', c.apellido_paterno) as nombres, c.direccion, c.telefono FROM pedidos as p INNER JOIN clientes as c ON c.id = p.id_cliente ORDER BY fecha DESC";
 
 $resultado = mysqli_query(
 	$conexion,

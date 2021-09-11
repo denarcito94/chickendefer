@@ -3,7 +3,24 @@ require_once "config/datos_conexion.php";
 session_start();
 
 $user = $_SESSION['user'] ?? ['username' => null];
-
+if (!$user["username"]) {
+	$_SESSION = array();
+	if (ini_get("session.use_cookies")) {
+		$params = session_get_cookie_params();
+		setcookie(
+			session_name(),
+			'',
+			time() - 42000,
+			$params["path"],
+			$params["domain"],
+			$params["secure"],
+			$params["httponly"]
+		);
+	}
+	session_destroy();
+	echo "<script>window.location = './'</script>";
+	exit;
+}
 $conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
 if (mysqli_connect_errno()) {
@@ -108,7 +125,9 @@ mysqli_close($conexion);
 								<th scope="col">Nombres</th>
 								<th scope="col">Dirrección</th>
 								<th scope="col">Detalles</th>
-								<th scope="col">Imprimir</th>
+								<th scope="col">Exportar
+
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -121,7 +140,7 @@ mysqli_close($conexion);
 									<td><?= $p['nombres'] ?></td>
 									<td><?= $p['direccion'] ?></td>
 									<td><button x-on:click="openDetail(<?= $p['id'] ?>)" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></button></td>
-									<td><a href="print.php?code=<?= base64_encode($p['id']) ?>" class="btn btn-primary btn-sm"><i class="fas fa-print"></i></a></td>
+									<td><a href="print.php?code=<?= base64_encode($p['id']) ?>" class="btn btn-primary btn-sm"><i class="far fa-file-pdf"></i></a></td>
 								</tr>
 							<?php endwhile ?>
 						</tbody>

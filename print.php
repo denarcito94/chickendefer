@@ -121,7 +121,7 @@ if (isset($_GET) && $data) {
         filename: 'pedido.pdf',
         image: {
           type: 'jpeg',
-          quality: 0.98
+          quality: 1
         },
         html2canvas: {
           scale: 1

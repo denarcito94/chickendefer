@@ -198,6 +198,16 @@ function processCart() {
       boxSpinner.classList.remove("d-flex");
       boxSpinner.classList.add("d-none");
       spinner.classList.remove("is-loading");
+
+      alertify.confirm(
+        "Desea exportar su pedido?",
+        function () {
+          window.location = `./print.php?code=${res.code}`;
+        },
+        function () {
+          alertify.error("Cancel");
+        }
+      );
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       console.error(

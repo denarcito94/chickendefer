@@ -5,6 +5,25 @@ $errors = $_SESSION['errors'] ?? [];
 $status = $_SESSION['status'] ?? null;
 $user = $_SESSION['user'] ?? ['username' => null];
 
+
+if (!$user["username"]) {
+	$_SESSION = array();
+	if (ini_get("session.use_cookies")) {
+		$params = session_get_cookie_params();
+		setcookie(
+			session_name(),
+			'',
+			time() - 42000,
+			$params["path"],
+			$params["domain"],
+			$params["secure"],
+			$params["httponly"]
+		);
+	}
+	session_destroy();
+	echo "<script>window.location = './'</script>";
+	exit;
+}
 $conexion = mysqli_connect($db_host, $db_user, $db_pass);
 
 if (mysqli_connect_errno()) {

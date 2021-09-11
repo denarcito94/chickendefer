@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="row justify-content-center align-content-center">
       <div class="col-8 barra">
-        <h4 class="text-light">Logo</h4>
+        <h4 class="text-light mb-o">Chickender</h4>
       </div>
       <div class="col-4 text-right barra">
         <ul class="navbar-nav mr-auto">
@@ -47,10 +47,10 @@
       </div>
       <main class="main col pt-4 px-4">
         <!-- TABLE -->
-        <div class="card shadow">
+        <div id="print-card" class="card shadow">
           <div class="card-header">
-            <span class="d-block h4">Resumen de Hoy</span>
-            <a class="btn btn-danger btn-sm" href="#">Exportar <i class="far fa-file-pdf"></i></a>
+            <span class="d-block h4">Resumen de Hoy <?= date("d/m/Y") ?></span>
+            <button onclick="print()" class="btn btn-danger btn-sm" href="#">Exportar <i class="far fa-file-pdf"></i></button>
           </div>
           <div class="card-body">
             <img src="../imagen/LOGO.png" alt="Brand Chicken">
@@ -107,7 +107,46 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/646c794df3.js"></script>
+  <script src="../html2pdf.bundle.min.js"></script>
   <script src="../codigo.js"></script>
+  <script>
+    const print = () => {
+
+      const $print = document.querySelector('#print-card')
+      $print.classList.remove('shadow')
+      $print.classList.add('border-0')
+      const opt = {
+        margin: 1,
+        filename: 'summary.pdf',
+        image: {
+          type: 'jpeg',
+          quality: 1
+        },
+        html2canvas: {
+          scale: 1
+        },
+        jsPDF: {
+          unit: 'in',
+          format: 'letter',
+          orientation: 'portrait'
+        }
+      };
+
+      html2pdf()
+        .set(opt)
+        .from($print)
+        .save()
+        .catch(err => {
+          console.error("Error print document:" + err)
+        })
+
+      const interval = setInterval(() => {
+        $print.classList.remove('border-0')
+        $print.classList.add('shadow')
+        clearInterval(interval)
+      })
+    }
+  </script>
 </body>
 
 </html>

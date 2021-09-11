@@ -61,6 +61,7 @@ if (isset($_POST) && $data) {
   echo json_encode([
     "statusCode" => 201,
     "body" => "Su pedido se ha procesado correctamente con ID: ${id}",
+    "code" => base64_encode($id)
   ]);
 
   exit;

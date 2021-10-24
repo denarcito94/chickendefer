@@ -44,7 +44,7 @@ $resultado = mysqli_query($conexion, $peticion);
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="public/css/main.css">
 
-	<script type="text/javascript" src="codigo.js"></script>
+
 </head>
 <style>
 	.btn_reg {
@@ -110,7 +110,7 @@ $resultado = mysqli_query($conexion, $peticion);
 								<h4 align="center">Registrar Cliente</h4>
 								<form class="was-validated" action="php/insertar_cliente.php" method="post">
 									<div class="form-group">
-										<input class="form-control" type="text" name="nit" placeholder="Ingrese un nit" required>
+										<input onkeyup="onlyNumber(this)" class="form-control" type="text" name="nit" placeholder="Ingrese un nit" required>
 										<br>
 										<input class="form-control" type="text" name="nombre" placeholder="Ingrese un nombre" required><br>
 										<input class="form-control" type="text" name="ape_paterno" placeholder="Ingrese un apellido paterno" required>
@@ -161,7 +161,7 @@ $resultado = mysqli_query($conexion, $peticion);
 								<tbody>
 									<?php while ($c = mysqli_fetch_array($resultado)) : ?>
 										<tr>
-											<form action="php/actualizar_producto.php?id=<?= $c['id'] ?>" method="post">
+											<form action="php/actualizar_cliente.php?id=<?= $c['id'] ?>" method="post">
 												<th scope="row"><input class="form-control" type="text" name="nit" value="<?= $c['nit'] ?>"></th>
 												<td><input class="form-control" type="text" name="nombre" value="<?= $c['nombre'] ?>"></td>
 												<td><input class="form-control" type="text" name="ape_paterno" value="<?= $c['apellido_paterno'] ?>"></td>
